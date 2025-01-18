@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- displays site properly based on user's device -->
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+    <link rel="stylesheet" href="./styles/add-to-cart.css">
+    <title>Frontend Mentor | Product list with cart</title>
+  </head>
+  <body>
+    
+    <div class="wrapper">
+      <div class="container">
+        <header>
+          <h1 class="top-heading">Desserts</h1>
+        </header>
+        <main>
+         
+          <!-- Example of one item -->
+          <section class="item">
+            <div class="thumbnail-cta">
+              <picture>
+                <source srcset="">
+              </picture>
+              <img src="./assets/images/image-waffle-mobile.jpg" alt="Thumbnail of waffle with berries">
+              <div class="cta">
+                <div class="add-to-cart">Add to Cart</div>
+                <!-- <div class="add-more"><button data-decrement>-</button><p class="item-add-no">0</p><button data-increment>+</button></div> -->
+              </div>
+            </div>
+            <div class="item-details">
+              <p class="category">Waffle</p>
+              <h3 class="item-title">Waffle with Berries</h3>
+              <p class="item-price">$6.50</p>
+            </div>
+          </section>
+  
+          <!-- Repeat for other items -->
+          <section class="item">
+            <div class="thumbnail-cta">
+              <img src="./assets/images/image-creme-brulee-thumbnail.jpg" alt="Thumbnail of Vanilla Bean Crème Brûlée">
+              <div class="cta">
+                <div class="add-to-cart">Add to Cart</div>
+                <!-- <div class="add-more"><button data-decrement>-</button><p class="item-add-no">0</p><button data-increment>+</button></div> -->
+              </div>
+            </div>
+            <div class="item-details">
+              <p class="category">Crème Brûlée</p>
+              <h3 class="item-title">Vanilla Bean Crème Brûlée</h3>
+              <p class="item-price">$7.00</p>
+            </div>
+          </section>
+  
+          <!-- Add additional items similarly -->
+          <section class="item">
+            <div class="thumbnail-cta">
+              <img src="./assets/images/image-waffle-thumbnail.jpg" alt="Thumbnail of waffle with berries">
+              <div class="cta">
+                <div class="add-to-cart">Add to Cart</div>
+                <!-- <div class="add-more"><button data-decrement>-</button><p class="item-add-no">0</p><button data-increment>+</button></div> -->
+              </div>
+            </div>
+            <div class="item-details">
+              <p class="category">Waffle</p>
+              <h3 class="item-title">Waffle with Berries</h3>
+              <p class="item-price">$6.50</p>
+            </div>
+          </section>
+        </main>
+      </div>
+
+      <aside class="cart-aside">
+        <h2>Your Cart (<span class="carted-items">0</span>)</h2>
+        <div class="cart-placeholder">
+          <img src="./assets/images/illustration-empty-cart.svg" alt="Empty cart illustration">
+          <p>Your cart is empty. Add some desserts to get started!</p>
+          <ul id="cart-items">
+            <!-- Dynamic cart items will appear here -->
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </body>
+</html>
