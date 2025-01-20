@@ -1,26 +1,23 @@
 @font-face {
   font-display: swap;
-  font-family: "Red Hat Text";
+  font-family: 'Red Hat Text';
   font-style: normal;
   font-weight: 400;
-  src: url("https://fonts-3by.pages.dev/red-hat-text-v18-latin/red-hat-text-v18-latin-regular.woff2")
-    format("woff2");
+  src: url('https://fonts-3by.pages.dev/red-hat-text-v18-latin/red-hat-text-v18-latin-regular.woff2') format('woff2');
 }
 @font-face {
   font-display: swap;
   font-family: "Red Hat Text";
   font-style: normal;
   font-weight: 600;
-  src: url("https://fonts-3by.pages.dev/red-hat-text-v18-latin/red-hat-text-v18-latin-600.woff2")
-    format("woff2");
+  src: url("https://fonts-3by.pages.dev/red-hat-text-v18-latin/red-hat-text-v18-latin-600.woff2") format("woff2");
 }
 @font-face {
   font-display: swap;
   font-family: "Red Hat Text";
   font-style: normal;
   font-weight: 700;
-  src: url("https://fonts-3by.pages.dev/red-hat-text-v18-latin/red-hat-text-v18-latin-700.woff2")
-    format("woff2");
+  src: url("https://fonts-3by.pages.dev/red-hat-text-v18-latin/red-hat-text-v18-latin-700.woff2") format("woff2");
 }
 
 :root {
@@ -38,7 +35,7 @@
 
   /*Fonts variable*/
   /*Fonts family*/
-  --ff:"Red Hat Text";
+  /* --font-family: 'Red Hat Text';  */
 }
 
 /* 1. Use a more-intuitive box-sizing model */
@@ -58,9 +55,9 @@ body {
   line-height: 1.5;
   /* 4. Improve text rendering */
   -webkit-font-smoothing: antialiased;
-  font-family: var(--ff);
+  font-family: 'Red Hat Text';
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -106,30 +103,130 @@ h6 {
   text-wrap: balance;
 }
 
-.wrapper{
+.wrapper {
+  display: grid;
+  gap: 50px;
+  margin: 20px;
+  width: 100%;
+}
+
+.container {
+  display: grid;
+  gap: 30px;
+  justify-self: center;
+  max-width: 400px;
+}
+
+.top-heading {
+  font-size: 40px;
+  color: var(--Rose-900);
+}
+
+main {
+  display: flex;
+  gap: 20px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-grow: 1;
+}
+
+.item {
+  display: grid;
+  cursor: pointer;
+}
+.item .thumbnail-cta picture {
+  max-width: 400px;
+  min-width: 300px;
+}
+.item .thumbnail-cta picture img {
+  border-radius: 10px;
+}
+
+.item .cta {
+  width: 150px;
+  height: 30px;  
+  border-radius: 25px;
+  justify-self: center;
+  transform: translateY(-50%);
+}
+
+.item .cta .add-to-cart {
+  display: none; 
+  background-color: var(--Rose-50);
+  border: 2px solid var(--Rose-300);
+  border-radius: 25px;
+}
+
+.item .cta .add-to-cart p {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  padding-block: 10px;
+  color:var(--Rose-900)
+}
+
+.item .cta .add-to-cart p::before {
+  content: "";
+  display: inline-block;
+  background-image: url(../assets/images/icon-add-to-cart.svg);
+  width: 18px;
+  height: 18px;
+  background-size: cover;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  margin-bottom: -4px;
+  margin-right: 5px;
+}
+
+.item .cta .add-more{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--Red);
+  border-radius: 25px;
+  height: 30px; 
+  padding-inline: 10px;  
+}
+.item .cta .add-more button{
+  width: 20px;
+  height: 20px;
+  padding-bottom: 10px;
+  border-radius: 25px;
+  border: 2px solid white;
+  background-color: var(--Red);
+}
+
+.item .cta .add-more button > p{
+ margin-top: -2px;
+}
+@media (min-width: 550px) {
+  .wrapper {
     display: grid;
     gap: 50px;
-    margin:20px;
-}
-
-.container{
+    margin: 40px;
+    width: 100%;
+  }
+  .container {
     display: grid;
     gap: 30px;
+    justify-self: center;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  main {
+    gap: 40px;
+    justify-content: flex-start;
+  }
+  .item .thumbnail-cta picture {
+    max-width: 200px;
+    min-width: 200px;
+  }
 }
 
-.top-heading{
-    font-size: 40px;
-    color: var(--Rose-900);
-}
-
-main{
-    display: flex;
-    gap:20px;
-    flex-direction: row;
-    flex-wrap: wrap;
-    flex-grow: 1;
-}
-
-.item{
-    
+@media (min-width: 1024px) {
+  .wrapper {
+    gap: 80px;
+    margin: 50px 100px;
+    grid-template-columns: auto minmax(250px, 300px);
+  }
 }
