@@ -1,23 +1,26 @@
 @font-face {
   font-display: swap;
-  font-family: 'Red Hat Text';
+  font-family: "Red Hat Text";
   font-style: normal;
   font-weight: 400;
-  src: url('https://fonts-3by.pages.dev/red-hat-text-v18-latin/red-hat-text-v18-latin-regular.woff2') format('woff2');
+  src: url("https://fonts-3by.pages.dev/red-hat-text-v18-latin/red-hat-text-v18-latin-regular.woff2")
+    format("woff2");
 }
 @font-face {
   font-display: swap;
   font-family: "Red Hat Text";
   font-style: normal;
   font-weight: 600;
-  src: url("https://fonts-3by.pages.dev/red-hat-text-v18-latin/red-hat-text-v18-latin-600.woff2") format("woff2");
+  src: url("https://fonts-3by.pages.dev/red-hat-text-v18-latin/red-hat-text-v18-latin-600.woff2")
+    format("woff2");
 }
 @font-face {
   font-display: swap;
   font-family: "Red Hat Text";
   font-style: normal;
   font-weight: 700;
-  src: url("https://fonts-3by.pages.dev/red-hat-text-v18-latin/red-hat-text-v18-latin-700.woff2") format("woff2");
+  src: url("https://fonts-3by.pages.dev/red-hat-text-v18-latin/red-hat-text-v18-latin-700.woff2")
+    format("woff2");
 }
 
 :root {
@@ -55,7 +58,7 @@ body {
   line-height: 1.5;
   /* 4. Improve text rendering */
   -webkit-font-smoothing: antialiased;
-  font-family: 'Red Hat Text';
+  font-family: "Red Hat Text";
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -102,6 +105,15 @@ h5,
 h6 {
   text-wrap: balance;
 }
+ul,
+li {
+  margin-left: -40px;
+  list-style-position: outside;
+}
+
+.selected-item {
+  border: 2px solid var(--Red);
+}
 
 .wrapper {
   display: grid;
@@ -123,11 +135,9 @@ h6 {
 }
 
 main {
-  display: flex;
+  display: grid;
   gap: 20px;
-  flex-direction: row;
-  flex-wrap: wrap;
-  flex-grow: 1;
+  grid-template-rows: auto;
 }
 
 .item {
@@ -144,25 +154,34 @@ main {
 
 .item .cta {
   width: 150px;
-  height: 30px;  
+  height: 30px;
   border-radius: 25px;
   justify-self: center;
   transform: translateY(-50%);
 }
 
 .item .cta .add-to-cart {
-  display: none; 
+  display: block; /*block*/
   background-color: var(--Rose-50);
   border: 2px solid var(--Rose-300);
   border-radius: 25px;
+  transform: translateY(-20%);
+  transition: all .3s ease-in-out;
 }
 
 .item .cta .add-to-cart p {
   text-align: center;
   font-size: 12px;
   font-weight: 600;
-  padding-block: 10px;
-  color:var(--Rose-900)
+  padding: 10px 0;
+  color: var(--Rose-900);
+  transition: all .2s ease-in-out;
+}
+.item .cta .add-to-cart:hover,
+.item .cta .add-to-cart p:hover
+ {
+  color: var(--Red);
+  border-color: var(--Red);
 }
 
 .item .cta .add-to-cart p::before {
@@ -178,27 +197,197 @@ main {
   margin-right: 5px;
 }
 
-.item .cta .add-more{
-  display: flex;
+.item .cta .add-more {
+  display: none; /*flex*/
   justify-content: space-between;
   align-items: center;
   background-color: var(--Red);
   border-radius: 25px;
-  height: 30px; 
-  padding-inline: 10px;  
+  height: 30px;
+  padding-inline: 7px;
 }
-.item .cta .add-more button{
+.item .cta .add-more button {
   width: 20px;
   height: 20px;
   padding-bottom: 10px;
   border-radius: 25px;
   border: 2px solid white;
   background-color: var(--Red);
+  cursor: pointer;
+  transition: all .3s ease-in-out;
 }
 
-.item .cta .add-more button > p{
- margin-top: -2px;
+.item .cta .add-more button > p {
+  justify-self: center;
+  color: var(--Rose-100);
+  padding-inline: 10px;
 }
+.item .cta .add-more button:hover{
+ background-color: var(--Rose-100);
+ 
+}
+.item .cta .add-more button > p:hover{
+  color: var(--Red);
+}
+
+button[data-action="decrement"] p {
+  margin-top: -5px;
+}
+button[data-action="increment"] p {
+  margin-top: -4.1px;
+}
+.item .cta .add-more .item-quantity {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--Rose-100);
+}
+
+.item .item-details .category {
+  font-size: 14px;
+  color: var(--Rose-400);
+}
+.item .item-details .item-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--Rose-900);
+}
+.item .item-details .item-price {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--Red);
+}
+
+/* cart section*/
+.cart-aside {
+  min-width: 300px;
+  max-width: 500px;
+  display: grid;
+  grid-template-rows: 30px auto;
+  gap: 20px;
+  justify-self: center;
+  margin-inline: 30px;
+}
+.cart-aside > h2 {
+  color: var(--Red);
+}
+.cart-aside .cart-placeholder .illustration{
+  display: none;
+}
+.cart-aside .cart-placeholder .illustration img {
+  min-width: 200px;
+  justify-self: center;
+}
+.cart-aside .cart-placeholder .illustration .description {
+  font-size: 12px;
+  width: 90%;
+  color: var(--Rose-500);
+  justify-self: center;
+}
+.cart-aside .cart-item-section {
+  display: grid;
+  gap: 20px;
+}
+/* cart list*/
+
+.cart-aside .cart-item-section ul li {
+  list-style: none;
+  margin: 0;
+  display: grid;
+  grid-template-rows: 25px 25px;
+  grid-template-columns: 1fr 30px;
+  /* row-gap: 10px; */
+  border-bottom: 1px solid rgba(128, 128, 128, 0.583);
+}
+
+.cart-aside .cart-item-section .total-price {
+  display: flex;
+  justify-content: space-between;
+  color: var(--Rose-900);
+}
+
+.cart-aside .cart-item-section ul li .item-name{
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--Rose-900);
+}
+.cart-aside .cart-item-section ul li .item-quantity-price {
+  width: 70%;
+  display: grid;
+  grid-template-columns: 20px repeat(2, minmax(40px, auto));
+  gap: 5px;
+  align-self: center;
+}
+.item-quantity, .item-price, .item-total-price{
+  font-size:12px;
+}
+.item-quantity{
+  color: var(--Red);
+  font-weight: 600;
+}
+.item-price{
+  color:var(--Rose-400) ;
+}
+
+.item-total-price{
+  color: var(--Rose-500);
+}
+.cart-aside .cart-item-section ul li .delete-item-cta {
+  grid-column: 2 / 3;
+  grid-row: 1 / -1;
+  height: 25px;
+  width: 25px;
+  align-self: center;
+  border-radius: 50%;
+  border: 2px solid var(--Rose-300);
+  cursor: pointer;
+}
+.cart-aside .cart-item-section ul li .delete-item-cta > p {
+  font-size: 14px;
+  margin-top: -3px;
+  color: var(--Rose-300);
+}
+.cart-aside .cart-item-section .total-price .title-text {
+  font-size: 16px;
+  padding-top: 5px;
+}
+.cart-aside .cart-item-section .total-price .total-amount {
+  font-size: 24px;
+  font-weight: 700;
+}
+.cart-aside .cart-item-section .msg {
+  font-size: 14px;
+  color: var(--Rose-900);
+  padding-block: 10px;
+  margin-inline: 10px;
+  text-align: center;
+  background-color: var(--Rose-100);
+}
+.cart-aside .cart-item-section .msg::before{
+  content: "";
+  display: inline-block;
+  background-image: url(../assets/images/icon-carbon-neutral.svg);
+  width: 20px;
+  height: 20px;
+  margin: 0 2px -4px 0;
+  background-size : cover;
+  background-position: top;
+  background-repeat: no-repeat;
+}
+.cart-aside .cart-item-section .cta-order-confirm {
+  background-color: var(--Red);
+  border-radius: 25px;
+  height: 40px;
+  border: none;
+  color: cornsilk;
+  letter-spacing: 1px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+.cart-aside .cart-item-section .cta-order-confirm:hover {
+  letter-spacing: 2px;
+  background-color: hsl(14, 90%, 31%);
+}
+
 @media (min-width: 550px) {
   .wrapper {
     display: grid;
@@ -211,19 +400,49 @@ main {
     gap: 30px;
     justify-self: center;
     max-width: 100%;
-    margin: 0 auto;
+    justify-self: center;
   }
   main {
     gap: 40px;
-    justify-content: flex-start;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+  }
+  .item {
+    max-width: 250px;
+  }
+  .item .cta {
+    width: 110px;
   }
   .item .thumbnail-cta picture {
-    max-width: 200px;
+    max-width: 250px;
     min-width: 200px;
+  }
+  .item .cta .add-to-cart {
+    transform: none;
+  }
+  .item .cta .add-to-cart p {
+    font-size: 10px;
+    padding-block: 5px;
+  }
+  .item .cta .add-to-cart p::before {
+    width: 12px;
+    height: 12px;
+    background-size: cover;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    margin-bottom: -3px;
+    margin-right: 5px;
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 740px) {
+  main {
+    gap: 40px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+  }
+}
+@media (min-width: 1124px) {
   .wrapper {
     gap: 80px;
     margin: 50px 100px;
