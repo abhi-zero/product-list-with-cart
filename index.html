@@ -3,48 +3,57 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- displays site properly based on user's device -->
+    <!-- Include Remix Icon library for icons -->
     <link
       href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
       rel="stylesheet" />
+    <!-- Favicon for the website -->
     <link rel="icon" type="image/png" sizes="32x32"
       href="./assets/images/favicon-32x32.png">
+    <!-- Link to external stylesheet -->
     <link rel="stylesheet" href="./styles/add-to-cart.css">
-    <title>Frontend Mentor | Product list with cart</title>
+    <!-- Link to external javaScript -->
+    <script defer src="./scripts/add-to-cart.js"></script>
+    <title>Frontend Mentor | Product List with Cart</title>
   </head>
   <body>
 
     <div class="wrapper">
       <div class="container">
+        <!-- Website header -->
         <header>
           <h1 class="top-heading">Desserts</h1>
         </header>
-        <main>
 
-          <!-- Example of one item -->
+        <!-- Main content area containing product items -->
+        <main>
+          <!-- Example of a single product item -->
           <section class="item">
             <div class="thumbnail-cta">
+              <!-- Responsive image for different screen sizes -->
               <picture>
-                <source media="(min-width : 550px)"
+                <source media="(min-width: 550px)"
                   srcset="./assets/images/image-waffle-tablet.jpg">
-                <source media="(min-width : 1020px)"
+                <source media="(min-width: 1020px)"
                   srcset="./assets/images/image-waffle-desktop.jpg">
                 <img src="./assets/images/image-waffle-mobile.jpg"
                   alt="Thumbnail of waffle with berries">
               </picture>
 
+              <!-- Call-to-action buttons for adding to cart and adjusting quantity -->
               <div class="cta">
-                <div class="add-to-cart"><p>Add to Cart</p></div>
+                <div class="add-to-cart">
+                  <p>Add to Cart</p>
+                </div>
                 <div class="add-more">
                   <button data-action="decrement"><p>-</p></button>
-                  <p
-                    class="item-quantity">
-                    0
-                  </p>
-                  <button
-                    data-action="increment"><p>+</p></button></div>
+                  <p class="item-quantity">0</p>
+                  <button data-action="increment"><p>+</p></button>
+                </div>
               </div>
             </div>
+
+            <!-- Product details -->
             <div class="item-details">
               <p class="category">Waffle</p>
               <h3 class="item-title">Waffle with Berries</h3>
@@ -52,77 +61,26 @@
             </div>
           </section>
 
-          <!-- Repeat for other items -->
+          <!-- Repeat structure for other products -->
           <section class="item">
             <div class="thumbnail-cta">
               <picture>
-                <source media="(min-width : 550px)"
+                <source media="(min-width: 550px)"
                   srcset="./assets/images/image-creme-brulee-tablet.jpg">
-                <source media="(min-width : 1020px)"
+                <source media="(min-width: 1020px)"
                   srcset="../assets/images/image-creme-brulee-desktop.jpg">
                 <img src="./assets/images/image-creme-brulee-mobile.jpg"
                   alt="Thumbnail of Vanilla Bean Crème Brûlée">
               </picture>
-
               <div class="cta">
-                <div class="add-to-cart"><p>Add to Cart</p></div>
-                <div class="add-more"><button
-                    data-action="decrement"><p>-</p></button><p
-                    class="item-quantity">0</p><button
-                    data-action="increment"><p>+</p></button></div>
-              </div>
-            </div>
-            <div class="item-details">
-              <p class="category">Crème Brûlée</p>
-              <h3 class="item-title">Vanilla Bean Crème Brûlée</h3>
-              <p class="item-price">$7.00</p>
-            </div>
-          </section>
-
-          <!-- Add additional items similarly -->
-          <section class="item">
-            <div class="thumbnail-cta">
-              <picture>
-                <source media="(min-width : 550px)"
-                  srcset="./assets/images/image-waffle-tablet.jpg">
-                <source media="(min-width : 1020px)"
-                  srcset="./assets/images/image-waffle-desktop.jpg">
-                <img src="./assets/images/image-waffle-mobile.jpg"
-                  alt="Thumbnail of waffle with berries">
-              </picture>
-
-              <div class="cta">
-                <div class="add-to-cart"><p>Add to Cart</p></div>
-                <div class="add-more"><button
-                    data-action="decrement"><p>-</p></button><p
-                    class="item-quantity">0</p><button
-                    data-action="increment"><p>+</p></button></div>
-              </div>
-            </div>
-            <div class="item-details">
-              <p class="category">Waffle</p>
-              <h3 class="item-title">Waffle with Berries</h3>
-              <p class="item-price">$6.50</p>
-            </div>
-          </section>
-
-          <section class="item">
-            <div class="thumbnail-cta">
-              <picture>
-                <source media="(min-width : 550px)"
-                  srcset="./assets/images/image-creme-brulee-tablet.jpg">
-                <source media="(min-width : 1020px)"
-                  srcset="../assets/images/image-creme-brulee-desktop.jpg">
-                <img src="./assets/images/image-creme-brulee-mobile.jpg"
-                  alt="Thumbnail of Vanilla Bean Crème Brûlée">
-              </picture>
-
-              <div class="cta">
-                <div class="add-to-cart"><p>Add to Cart</p></div>
-                <div class="add-more"><button
-                    data-action="decrement"><p>-</p></button><p
-                    class="item-quantity">0</p><button
-                    data-action="increment"><p>+</p></button></div>
+                <div class="add-to-cart">
+                  <p>Add to Cart</p>
+                </div>
+                <div class="add-more">
+                  <button data-action="decrement"><p>-</p></button>
+                  <p class="item-quantity">0</p>
+                  <button data-action="increment"><p>+</p></button>
+                </div>
               </div>
             </div>
             <div class="item-details">
@@ -134,31 +92,37 @@
         </main>
       </div>
 
+      <!-- Cart sidebar to display selected items -->
       <aside class="cart-aside">
         <h2>Your Cart (<span class="carted-items">0</span>)</h2>
         <div class="cart-placeholder">
+          <!-- Placeholder for empty cart -->
           <div class="illustration">
             <img src="./assets/images/illustration-empty-cart.svg"
-              alt="Empty cart illustration">
+              alt="Illustration showing an empty cart with no items">
             <p class="description">Your cart is empty. Add some desserts to get
               started!</p>
           </div>
+
+          <!-- Section for displaying selected cart items dynamically -->
           <div class="cart-item-section">
             <ul id="cart-items">
-              <!-- Dynamic cart items will appear here -->
+              <!-- Example of a cart item -->
               <li>
-                <p class="item-name">Classic Triamisu</p>
+                <p class="item-name">Classic Tiramisu</p>
                 <span class="item-quantity-price">
-                  <p class="item-quantity">1<span class="x">x</span>
-                  </p>
+                  <p class="item-quantity">1<span class="x">x</span></p>
                   <p class="item-price">@ <span
                       class="currency-symbol">$</span>505.50</p>
                   <p class="item-total-price"><span
                       class="currency-symbol">$</span>606.54</p>
                 </span>
-                <button class="delete-item-cta"><p>x</p></button>
+                <button class="delete-item-cta"
+                  aria-label="Remove Item from cart"><p>x</p></button>
               </li>
             </ul>
+
+            <!-- Order summary section -->
             <span class="total-price">
               <p class="title-text">Order</p>
               <p class="total-amount"><span
@@ -166,46 +130,43 @@
             </span>
             <div class="msg">This is a <strong>carbon-neutral</strong>
               delivery</div>
-            <button class="cta-order-confirm" data-modal="open">Confirm
+            <button class="cta-order-confirm" data-modal-open>Confirm
               Order</button>
           </div>
         </div>
       </aside>
-      <dialog data-modal class="modal">
-        <div class="modal-wrapper">
-          <img src="./assets/images/icon-order-confirmed.svg"
-            alt="Green tick in circle">
-          <div class="heading-description">
-            <h2 class="heading">Order Confirmed</h2>
-            <p class="description">We hope you enjoy your food!</p>
-          </div>
-          <div class="ordered-items">
-            <ul>
-              <li class="ordered-item">
-                <img src="./assets/images/image-cake-thumbnail.jpg" alt="">
-                <p class="item-name">
-                  Classic Triamisu
-                </p>
-                <span class="item-quantity-price">
-                  <p class="item-quantity">
-                    1
-                    <span class="x">
-                      x
-                    </span>
-                  </p>
-                  <p class="item-price">
-                    @ <span
-                      class="currency-symbol">$</span>505.50
-                  </p>
-                </span>
-                <p class="item-total-price"><span
-                  class="currency-symbol">$</span>606.54</p>
-              </li>
-            </ul>
-          </div>
-          <button class="cta-close-modal" data-modal="close">Close</button>
-        </div>
-      </dialog>
+
+      <!-- Modal for order confirmation -->
     </div>
+    <dialog data-modal >
+     
+        <img src="./assets/images/icon-order-confirmed.svg"
+          alt="Green tick in circle">
+        <div class="heading-description">
+          <h2 class="heading">Order Confirmed</h2>
+          <p class="description">We hope you enjoy your food!</p>
+        </div>
+        <div class="ordered-items">
+          <ul>
+            <!-- Example of an ordered item -->
+            <li class="ordered-item">
+              <img src="./assets/images/image-cake-thumbnail.jpg"
+                alt="Thumbnail of Classic Tiramisu">
+              <p class="item-name">Classic Tiramisu</p>
+              <span class="item-quantity-price">
+                <p class="item-quantity">1<span class="x">x</span></p>
+                <p class="item-price">@ <span
+                    class="currency-symbol">$</span>505.50</p>
+              </span>
+              <p class="item-total-price"><span
+                  class="currency-symbol">$</span>606.54</p>
+            </li>
+          </ul>
+        </div>
+        <button class="cta-close-modal" data-modal-close
+          aria-label="Close order confirmation modal">Start New Order</button>
+  
+    </dialog>
+
   </body>
 </html>
