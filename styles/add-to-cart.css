@@ -490,7 +490,8 @@ dialog .modal-wrapper {
   .container {
     display: grid;
     gap: 30px;
-    justify-self: center;
+    justify-self: space-evenly;
+    min-width: none;
     max-width: 100%;
   }
   .top-heading {
@@ -540,19 +541,50 @@ dialog .modal-wrapper {
 }
 
 @media (min-width: 740px) {
+ 
   main {
     gap: 40px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto;
   }
 }
-@media (min-width: 1124px) {
+@media (min-width: 1260px) {
   .wrapper {
     gap: 80px;
     margin: 50px 100px;
     grid-template-columns: auto minmax(250px, 300px);
   }
   .container {
-    justify-self: left;
+    justify-self: center;
+  }
+  main{
+    grid-column: 1 / 2;
+    grid-template-columns: repeat(3, 1fr );
+  }
+  .cart-aside{
+    margin: 30px 0 0 0;
+  }
+}
+
+@media (min-width: 1400px) {
+  .wrapper {
+    gap: 80px;
+    margin: 50px 100px;
+    grid-template-columns: auto minmax(250px, 300px);
+  }
+  main{
+    grid-column: 1 / 2;
+    grid-template-columns: repeat(4 , minmax(200px, 1fr ));
+  }
+}
+@media (min-width: 2300px) {
+  .wrapper {
+    gap: 80px;
+    margin: 50px 150px;
+    grid-template-columns: auto minmax(300px, 500px);
+  }
+  main{
+    grid-column: 1 / 2;
+    grid-template-columns: repeat(6 , minmax(200px, 1fr ));
   }
 }
