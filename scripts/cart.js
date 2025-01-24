@@ -1,4 +1,4 @@
-import { createElementWithClass, getData } from "./main.js";
+import { createElementWithClass, getData, showPlaceholder } from "./main.js";
 
 export let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
 
@@ -8,7 +8,7 @@ class CartItem {
     this.quantity = quantity;
     this.name = data.name;
     this.price = data.price;
-    this.image = data.image.thumbnail; 
+    this.image = data.image.thumbnail;
   }
 }
 
@@ -28,7 +28,7 @@ export function addToCart(event, quantity) {
 
   saveItemInToCart(productId, quantityValue);
   displayItemCount();
- 
+
   return true;
 }
 
@@ -39,27 +39,27 @@ async function saveItemInToCart(productId, quantityValue) {
     // Check if the item is already in the cart
     const isPresent = cart.some((item) => item.cartItemId == productId);
     if (!isPresent) {
-      const item = await new CartItem(productId, quantityValue, data[productId]);
+      const item = await new CartItem(
+        productId,
+        quantityValue,
+        data[productId]
+      );
       cart.push(item);
     } else if (quantityValue == 0 && isPresent) {
       const index = cart.findIndex((item) => item.cartItemId == productId);
       if (index !== -1) {
         cart.splice(index, 1);
       }
-    } else {
-      const item = cart.find((elem) => elem.cartItemId == productId)
+    }else {
+      const item = cart.find((elem) => elem.cartItemId == productId);
       item.quantity = quantityValue;
     }
-
-    console.log(productId, quantityValue);
-    
-    storeCartItemsInLocalStorage();
-    generateItemForCart();
+    updateCartView();
   } catch (error) {
     console.error("Error fetching data:", error);
     return;
   }
-  
+
   return true;
 }
 
@@ -74,66 +74,86 @@ function storeCartItemsInLocalStorage() {
   return true;
 }
 
-
-
-
 function generateItemForCart() {
   // generate item for cart
   const ulList = document.querySelector("#cart-items");
   ulList.innerHTML = "";
   cart.forEach((item) => {
     const li = document.createElement("li");
-    
-    const paraItemName = createElementWithClass(
-      "p",
-      "item-name",
-      item.name
-    );
+    li.dataset.itemid = item.cartItemId;
+
+    const paraItemName = createElementWithClass("p", "item-name", item.name);
     const spanQuantityPrice = createElementWithClass(
       "span",
       "item-quantity-price"
     );
-  
+
     const paraItemQuantity = createElementWithClass(
       "p",
       "item-quantity",
-       item.quantity
+      item.quantity
     );
-    const spanXSymbol = createElementWithClass(
-      "span",
-      "x",
-      "x"
-    )
-    
-    
-    const paraItemPrice = createElementWithClass(
-      "p",
-      "item-price",
-    )
-    paraItemPrice.innerHTML =  `@ <span class="currency-symbol">$</span>${item.price}`
-  
-    const paraItemTotalPrice = createElementWithClass(
-      "p",
-      "item-total-price",
-    );
-    paraItemTotalPrice.innerHTML = `<span class="currency-symbol">$</span>${item.price * item.quantity}`
-  
+    const spanXSymbol = createElementWithClass("span", "x", "x");
+
+    const paraItemPrice = createElementWithClass("p", "item-price");
+    paraItemPrice.innerHTML = `@ <span class="currency-symbol">$</span>${item.price}`;
+
+    const paraItemTotalPrice = createElementWithClass("p", "item-total-price");
+    paraItemTotalPrice.innerHTML = `<span class="currency-symbol">$</span>${
+      item.price * item.quantity
+    }`;
+
     const buttonDeleteItem = createElementWithClass(
       "button",
-      "delete-item-cta",
+      "delete-item-cta"
     );
     buttonDeleteItem.setAttribute("aria-label", "Remove Item from cart");
-    const paraButtonText = document.createElement('p');
+    const paraButtonText = document.createElement("p");
     paraButtonText.textContent = "x";
-  
-    ulList.append(li)
+    buttonDeleteItem.addEventListener("click", () => {
+      deleteItem(item.cartItemId);
+    });
+
+    ulList.append(li);
     li.append(paraItemName, spanQuantityPrice, buttonDeleteItem);
-    spanQuantityPrice.append(paraItemQuantity, paraItemPrice, paraItemTotalPrice);
+    spanQuantityPrice.append(
+      paraItemQuantity,
+      paraItemPrice,
+      paraItemTotalPrice
+    );
     paraItemQuantity.prepend(spanXSymbol);
     buttonDeleteItem.append(paraButtonText);
-  })
-  
- 
+  });
+
   return ulList;
 }
 
+function deleteItem(cartItemId) {
+  cart = cart.filter((item) => {
+    return item.cartItemId !== cartItemId;
+  });
+  if(!cartItemId){
+    
+  }
+  updateCartView();
+}
+
+function showTotalPrice(cart) {
+  const totalPrice = calcTotalPrice(cart);
+  const totalPriceText = document.querySelector(".total-amount");
+  totalPriceText.textContent = `$${totalPrice.toFixed(2)}`;
+}
+function calcTotalPrice(cart) {
+  const calcPrice = cart.reduce((total, item) => {
+    return (total += item.price * 100 * item.quantity);
+  }, 0);
+  return calcPrice / 100;
+}
+
+export function updateCartView() {
+  storeCartItemsInLocalStorage();
+  displayItemCount();
+  generateItemForCart();
+  showTotalPrice(cart);
+  showPlaceholder();
+}
