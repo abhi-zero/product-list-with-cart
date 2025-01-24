@@ -109,8 +109,11 @@ h6 {
 }
 
 .selected-item {
-  border: 2px solid var(--Red);
+  border: 3px solid var(--Red);
+  border-radius: 10px;
 }
+
+
 
 .wrapper {
   display: grid;
@@ -270,7 +273,7 @@ button[data-action="increment"] p {
   color: var(--Red);
 }
 .cart-aside .cart-placeholder .illustration {
-  display: none;
+  display: block;  /* none or block*/
 }
 .cart-aside .cart-placeholder .illustration img {
   min-width: 200px;
@@ -281,9 +284,10 @@ button[data-action="increment"] p {
   width: 90%;
   color: var(--Rose-500);
   justify-self: center;
+  text-align: center;
 }
 .cart-aside .cart-item-section {
-  display: grid;
+  display: none;   /* none or grid */
   gap: 20px;
 }
 /* cart list*/
