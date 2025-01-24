@@ -1,5 +1,6 @@
 // Import the cart and addToCart functions from the cart.js file
-import { cart, addToCart } from "./cart.js";
+import { cart, addToCart, updateCartView } from "./cart.js";
+import { generateItemForModal } from "./modal.js";
 
 // Select the modal elements in the DOM for displaying and closing the modal
 const modal = document.querySelector("[data-modal]");
@@ -9,11 +10,13 @@ const ctaCloseModal = document.querySelector("[data-modal-close]");
 // Event listener to open the modal when clicking on the confirm order button
 ctaConfirmOrder.addEventListener("click", () => {
   modal.showModal();
+  generateItemForModal();
 });
 
 // Event listener to close the modal when clicking on the close modal button
 ctaCloseModal.addEventListener("click", () => {
   modal.close();
+  clearCart()
 });
 
 // This function fetches data from a JSON file and returns it as a Promise
@@ -103,11 +106,13 @@ function createItemSection(item, index) {
 
   // Event listener to handle adding/removing items from the cart
   divCta.addEventListener("click", (event) => {
-    addAndRemoveCart(divBtnAddMore, divBtnAddToCart, event);
+
+    addAndRemoveCart(divBtnAddMore, divBtnAddToCart, event, imgTag);
   });
 
   return section;
 }
+
 
 // Function to create the cart section of the page
 function createCartSection() {
@@ -139,31 +144,12 @@ function createCartSection() {
 
   let ulCartItems = document.createElement("ul");
   ulCartItems.setAttribute("id", "cart-items");
-   /* li example
-        <li>
-                <p class="item-name">Classic Tiramisu</p>
-                <span class="item-quantity-price">
-                  <p class="item-quantity">1<span class="x">x</span></p>
-                  <p class="item-price">@ <span
-                      class="currency-symbol">$</span>505.50</p>
-                  <p class="item-total-price"><span
-                      class="currency-symbol">$</span>606.54</p>
-                </span>
-                <button class="delete-item-cta"
-                  aria-label="Remove Item from cart"><p>x</p></button>
-              </li>
-        */
+  
   const spanTotalPrice = createElementWithClass("span", "total-price");
 
   const paraTitleText = createElementWithClass("p", "title-text", "Order");
 
-  const spanCurrencySymbol = createElementWithClass(
-    "span",
-    "currency-symbol",
-    "$"
-  );
-
-  const paraTotalAmount = createElementWithClass("p", "total-amount", "45.25");
+  const paraTotalAmount = createElementWithClass("p", "total-amount", "$-- --");
 
   const divMsg = createElementWithClass("div", "msg");
   divMsg.innerHTML = `This is a <strong>carbon-neutral</strong> delivery`;
@@ -178,8 +164,6 @@ function createCartSection() {
     ctaConfirmOrder
   );
   spanTotalPrice.prepend(paraTitleText, paraTotalAmount);
-  paraTotalAmount.prepend(spanCurrencySymbol);
-
   return aside;
 }
 
@@ -211,10 +195,11 @@ async function init() {
 init();
 
 // Function to handle adding and removing items from the cart
-function addAndRemoveCart(addSection, removeSection, event) {
+function addAndRemoveCart(addSection, removeSection, event, item) {
   addSection.style.display = "flex";
   removeSection.style.display = "none";
-
+  item.classList.add('selected-item');
+  
   const cta = event.target.closest(".cta");
 
   const quantity = cta.querySelector(".item-quantity");
@@ -225,20 +210,43 @@ function addAndRemoveCart(addSection, removeSection, event) {
 
   if (action === "increment") {
     quantity.textContent = parseInt(quantity.textContent) + 1;
-  } else if (action === "decrement") {
+  }else if (action === "decrement") {
+    if(quantity.textContent == "0"){
+      showPlaceholder();
+      return 
+    }
     quantity.textContent = Math.max(0, parseInt(quantity.textContent) - 1);
+
+    
     // Hide the add button if the quantity is zero, and show it after a delay
     if (addSection.style.display == "flex" && quantity.textContent == "0") {
-      setTimeout(() => {
         addSection.style.display = "none";
         removeSection.style.display = "block";
-      }, 10000);
+        item.classList.remove('selected-item')
     }
   }
-
+  if(cart.length == "0" && quantity.textContent > "1"){
+    quantity.textContent = "0";
+  }
   // Add the item to the cart
   addToCart(event, quantity);
-
-  // Log the cart for debugging
-  console.log(cart);
 }
+
+function clearCart(){
+  cart.length = 0;
+  localStorage.removeItem('cartItems');
+  updateCartView();
+}
+
+const illustration = document.querySelector('.illustration');
+const cartItemSection = document.querySelector('.cart-item-section');
+export function showPlaceholder(){
+  if(cart.length == 0){
+    illustration.style.display = "block";
+    cartItemSection.style.display = "none";
+  }else{
+    illustration.style.display = "none";
+    cartItemSection.style.display = "grid";
+  }
+}
+showPlaceholder();
