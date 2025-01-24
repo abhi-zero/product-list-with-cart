@@ -1,23 +1,24 @@
+// Import the cart and addToCart functions from the cart.js file
+import { cart, addToCart } from "./cart.js";
 
-import {cart, addToCart}  from "./cart.js";
-
+// Select the modal elements in the DOM for displaying and closing the modal
 const modal = document.querySelector("[data-modal]");
 const ctaConfirmOrder = document.querySelector("[data-modal-open]");
 const ctaCloseModal = document.querySelector("[data-modal-close]");
 
-
+// Event listener to open the modal when clicking on the confirm order button
 ctaConfirmOrder.addEventListener("click", () => {
   modal.showModal();
 });
 
+// Event listener to close the modal when clicking on the close modal button
 ctaCloseModal.addEventListener("click", () => {
   modal.close();
 });
 
-
 // This function fetches data from a JSON file and returns it as a Promise
-async function getData() {
-  const url = "../data/data.json";
+export async function getData() {
+  const url = "../data/data.json"; // URL to the data file
 
   // Fetch data from the specified URL
   let response = await fetch(url);
@@ -27,20 +28,23 @@ async function getData() {
     throw new Error("Error fetching data");
   }
 
-  // Parse the response as JSON and Return the fetched data
+  // Parse the response as JSON and return the fetched data
   return response.json();
 }
 
-function createElementWithClass(tag, classname = null, textContent = "") {
+// Helper function to create an HTML element with a class and optional text content
+export function createElementWithClass(tag, classname = null, textContent = "") {
   const element = document.createElement(tag);
   element.className = classname;
   element.textContent = textContent;
   return element;
 }
 
+// Select the main and aside elements in the DOM
 const main = document.querySelector("main");
 const aside = document.querySelector("aside");
 
+// Function to create and return a section element for each item
 function createItemSection(item, index) {
   const section = createElementWithClass("section", "item");
 
@@ -48,6 +52,7 @@ function createItemSection(item, index) {
 
   let pictureTag = document.createElement("picture");
 
+  // Create source tags for tablet and desktop image sizes
   const sourceTablet = document.createElement("source");
   sourceTablet.setAttribute("media", "(min-width: 550px)");
   sourceTablet.setAttribute("srcset", `${item.image.tablet}`);
@@ -60,22 +65,22 @@ function createItemSection(item, index) {
   imgTag.setAttribute("src", `${item.image.mobile}`);
   imgTag.setAttribute("alt", `Thumbnail of ${item.name}`);
 
+  // Create div for the call-to-action (CTA) buttons
   const divCta = createElementWithClass("div", "cta");
-
+  divCta.setAttribute("data-ItemId", index);
   const divBtnAddToCart = createElementWithClass("div", "add-to-cart");
-  divBtnAddToCart.setAttribute('data-ItemId', index)
 
+  // Add text to the "Add to Cart" button
   const paraAddToCart = createElementWithClass("p", "", "Add to Cart");
 
   const divBtnAddMore = createElementWithClass("div", "add-more");
 
   const divItemDetails = createElementWithClass("div", "item-details");
 
-  const paraCategory = createElementWithClass("p", "category", item.category); // Replace with your actual item category
-
-  const h3ItemTitle = createElementWithClass("h3", "item-title", item.name); // Replace with your actual item title
-
-  const paraItemPrice = createElementWithClass("p", "item-price", item.price); // Replace with your actual item title
+  // Display the item category, name, and price
+  const paraCategory = createElementWithClass("p", "category", item.category);
+  const h3ItemTitle = createElementWithClass("h3", "item-title", item.name);
+  const paraItemPrice = createElementWithClass("p", "item-price", item.price);
 
   const spanCurrencySymbol = createElementWithClass(
     "span",
@@ -83,24 +88,28 @@ function createItemSection(item, index) {
     "$"
   );
 
+  // Append the created elements to their respective parent elements
   section.append(divThumbnailCta, divItemDetails);
   divThumbnailCta.append(pictureTag, divCta);
   pictureTag.append(sourceTablet, sourceDesktop, imgTag);
   divCta.append(divBtnAddToCart, divBtnAddMore);
   divBtnAddToCart.append(paraAddToCart);
   divBtnAddMore.innerHTML = `<button data-action="decrement"><p>-</p></button>
-                      <p class="item-quantity">1</p>
+                      <p class="item-quantity" data-itemid='${index}'>1</p>
                       <button data-action="increment"><p>+</p></button>`;
   divItemDetails.append(paraCategory);
   divItemDetails.append(paraCategory, h3ItemTitle, paraItemPrice);
   paraItemPrice.prepend(spanCurrencySymbol);
 
+  // Event listener to handle adding/removing items from the cart
   divCta.addEventListener("click", (event) => {
     addAndRemoveCart(divBtnAddMore, divBtnAddToCart, event);
   });
+
   return section;
 }
 
+// Function to create the cart section of the page
 function createCartSection() {
   const h2Aside = createElementWithClass("h2", "");
   h2Aside.innerHTML = `Your Cart (<span class="carted-items">0</span>)`;
@@ -109,6 +118,7 @@ function createCartSection() {
 
   const divIllustration = createElementWithClass("div", "illustration");
 
+  // Add an illustration and message if the cart is empty
   const imgIllustration = document.createElement("img");
   imgIllustration.setAttribute(
     "src",
@@ -129,7 +139,7 @@ function createCartSection() {
 
   let ulCartItems = document.createElement("ul");
   ulCartItems.setAttribute("id", "cart-items");
-  /* li example
+   /* li example
         <li>
                 <p class="item-name">Classic Tiramisu</p>
                 <span class="item-quantity-price">
@@ -143,7 +153,6 @@ function createCartSection() {
                   aria-label="Remove Item from cart"><p>x</p></button>
               </li>
         */
-
   const spanTotalPrice = createElementWithClass("span", "total-price");
 
   const paraTitleText = createElementWithClass("p", "title-text", "Order");
@@ -154,10 +163,11 @@ function createCartSection() {
     "$"
   );
 
-  const paraTotalAmount = createElementWithClass("p", "total-amount", "45.25"); // add dynamicly
+  const paraTotalAmount = createElementWithClass("p", "total-amount", "45.25");
 
   const divMsg = createElementWithClass("div", "msg");
   divMsg.innerHTML = `This is a <strong>carbon-neutral</strong> delivery`;
+
   aside.append(h2Aside, divCartPlacehorlder);
   divCartPlacehorlder.append(divIllustration, divCartItemSection);
   divIllustration.append(imgIllustration, paraIllustration);
@@ -173,28 +183,34 @@ function createCartSection() {
   return aside;
 }
 
+// Function to render items on the page
 async function renderItems() {
   try {
-    const data = await getData();
+    const data = await getData(); // Fetch the data
 
     const fragment = document.createDocumentFragment();
+    // Create and append sections for each item
     data.forEach((item, index) => {
       const section = createItemSection(item, index);
       fragment.append(section);
     });
     main.append(fragment);
   } catch (error) {
+    // Handle error in case the data fetching fails
     main.innerHTML = "<p>Failed to load items. Please try again later.</p>";
   }
 }
 
+// Initialize the page by creating the cart section and rendering items
 async function init() {
   createCartSection();
   await renderItems();
 }
 
+// Run the initialization function
 init();
 
+// Function to handle adding and removing items from the cart
 function addAndRemoveCart(addSection, removeSection, event) {
   addSection.style.display = "flex";
   removeSection.style.display = "none";
@@ -203,13 +219,15 @@ function addAndRemoveCart(addSection, removeSection, event) {
 
   const quantity = cta.querySelector(".item-quantity");
 
-  // Determine the action (increment or decrement)
+  // Determine the action (increment or decrement) based on the button clicked
   const button = event.target.closest("button");
   const action = button?.dataset?.action;
- if (action === "increment") {
+
+  if (action === "increment") {
     quantity.textContent = parseInt(quantity.textContent) + 1;
   } else if (action === "decrement") {
     quantity.textContent = Math.max(0, parseInt(quantity.textContent) - 1);
+    // Hide the add button if the quantity is zero, and show it after a delay
     if (addSection.style.display == "flex" && quantity.textContent == "0") {
       setTimeout(() => {
         addSection.style.display = "none";
@@ -217,5 +235,10 @@ function addAndRemoveCart(addSection, removeSection, event) {
       }, 10000);
     }
   }
-  addToCart(event);
+
+  // Add the item to the cart
+  addToCart(event, quantity);
+
+  // Log the cart for debugging
+  console.log(cart);
 }
