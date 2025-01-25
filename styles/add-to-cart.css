@@ -37,8 +37,11 @@
   --Rose-900: hsl(14, 65%, 9%);
 
   /*Fonts variable*/
-  /*Fonts family*/
-  /* --font-family: 'Red Hat Text';  */
+  --font-size-100: 0.75rem; /*12px*/
+  --font-size-200: 1rem; /*16px*/
+  --font-size-300: 1.5rem; /*24px*/
+  --font-size-400: 2.5rem; /*40px*/
+  --font-size-500: 3rem; /*48px*/
 }
 
 /* 1. Use a more-intuitive box-sizing model */
@@ -112,8 +115,15 @@ h6 {
   border: 3px solid var(--Red);
   border-radius: 10px;
 }
-
-
+.hidden{
+  display: none;
+}
+.visibilty-flex{
+  display: flex;
+}
+.visibilty-block{
+  display: block;
+}
 
 .wrapper {
   display: grid;
@@ -132,7 +142,7 @@ h6 {
 
 .top-heading {
   margin: 0 20px;
-  font-size: 40px;
+  font-size: var(--font-size-400);
   color: var(--Rose-900);
 }
 
@@ -165,7 +175,7 @@ main {
 }
 
 .item .cta .add-to-cart {
-  display: block; /*block*/
+  /* display: block; block */
   background-color: var(--Rose-50);
   border: 2px solid var(--Rose-300);
   border-radius: 25px;
@@ -175,7 +185,7 @@ main {
 
 .item .cta .add-to-cart p {
   text-align: center;
-  font-size: 12px;
+  font-size: var(--font-size-100);
   font-weight: 600;
   padding: 10px 0;
   color: var(--Rose-900);
@@ -201,7 +211,7 @@ main {
 }
 
 .item .cta .add-more {
-  display: none; /*flex*/
+  /* display: none; flex */
   justify-content: space-between;
   align-items: center;
   background-color: var(--Red);
@@ -249,12 +259,12 @@ button[data-action="increment"] p {
   color: var(--Rose-400);
 }
 .item .item-details .item-title {
-  font-size: 16px;
+  font-size: var(--font-size-200);
   font-weight: 600;
   color: var(--Rose-900);
 }
 .item .item-details .item-price {
-  font-size: 16px;
+  font-size: var(--font-size-200);
   font-weight: 700;
   color: var(--Red);
 }
@@ -280,7 +290,7 @@ button[data-action="increment"] p {
   justify-self: center;
 }
 .cart-aside .cart-placeholder .illustration .description {
-  font-size: 12px;
+  font-size: var(--font-size-100);
   width: 90%;
   color: var(--Rose-500);
   justify-self: center;
@@ -310,11 +320,11 @@ button[data-action="increment"] p {
   color: var(--Rose-900);
 }
 .total-price .title-text {
-  font-size: 16px;
+  font-size: var(--font-size-200);
   padding-top: 5px;
 }
  .total-price .total-amount {
-  font-size: 24px;
+  font-size: var(--font-size-300);
   font-weight: 700;
 }
 
@@ -326,14 +336,14 @@ button[data-action="increment"] p {
 .cart-aside .cart-item-section ul li .item-quantity-price {
   width: 70%;
   display: grid;
-  grid-template-columns: 20px repeat(2, 60px);
+  grid-template-columns: 30px repeat(2, 60px);
   gap: 5px;
   align-self: center;
 }
 .item-quantity,
 .item-price,
 .item-total-price {
-  font-size: 12px;
+  font-size: var(--font-size-100);
 }
 .item-quantity {
   color: var(--Red);
@@ -423,15 +433,15 @@ dialog .modal-wrapper {
 }
 
 .modal-wrapper .heading-description .heading {
-  font-size: 48px;
+  font-size: var(--font-size-500);
   line-height: 1;
   font-weight: 700;
   color: var(--Rose-900);
 }
 
 .modal-wrapper .heading-description .description {
-  font-size: 16px;
-  margin-top: 5px;
+  font-size: var(--font-size-200);
+  margin: 5px 0 0 5px;
   color: var(--Rose-500);
 }
 .modal-wrapper .ordered-items {
@@ -442,6 +452,7 @@ dialog .modal-wrapper {
   list-style-position: outside;
   margin-left: -10px;
   margin-right: 30px;
+  margin-bottom: 5px;
   list-style: none;
   display: grid;
   grid-template-columns: 50px 1fr 50px;
@@ -471,6 +482,7 @@ dialog .modal-wrapper {
   font-weight: 700;
   color: var(--Rose-500);
   align-content: center;
+  justify-self: right;
 }
 
 .modal-wrapper .cta-close-modal {
@@ -537,7 +549,7 @@ dialog .modal-wrapper {
     all: revert;
     border-radius: 10px;
     border: none;
-    padding:10px 20px; 
+    padding:10px 30px; 
   }
   .modal-wrapper .ordered-items {
     scrollbar-width:thin;
