@@ -161,4 +161,3 @@ export function updateCartView() {
   showPlaceholder();
   generateItemForModal()
 }
-console.log(cart);
