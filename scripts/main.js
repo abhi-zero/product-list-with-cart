@@ -22,7 +22,7 @@ ctaCloseModal.addEventListener("click", () => {
 // This function fetches data from a JSON file and returns it as a Promise
 export async function getData() {
   
-  const url = "https://github.com/abhi-zero/product-list-with-cart/blob/main/data/data.json"; // URL to the data file
+  const url = "https://raw.githubusercontent.com/abhi-zero/product-list-with-cart/main/data/data.json"; // URL to the data file
 
   // Fetch data from the specified URL
   let response = await fetch(url);
