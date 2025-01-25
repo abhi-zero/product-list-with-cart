@@ -3,7 +3,10 @@ import { createElementWithClass } from "./main.js";
 const modalUl = document.querySelector(".modal-ul");
 
 export function generateItemForModal() {
+  modalUl.innerHTML = "";  // Clear existing items in modal before adding new ones
+  const fragment = document.createDocumentFragment();
   cart.forEach((item) => {
+
     const modalLi = createElementWithClass("li", "ordered-item");
     
     const imgItem = document.createElement("img");
@@ -25,20 +28,19 @@ export function generateItemForModal() {
     const spanXSymbol = createElementWithClass("span", "x", "x");
 
     const paraItemPrice = createElementWithClass("p", "item-price");
-    paraItemPrice.innerHTML = `@ <span class="currency-symbol">$</span>${item.price}`;
+    const spanCurrencySymbol = createElementWithClass("span", "currency-symbol", "$");
+    paraItemPrice.append(spanCurrencySymbol, document.createTextNode(item.price));
 
     const paraItemTotalPrice = createElementWithClass("p", "item-total-price");
-    paraItemTotalPrice.innerHTML = `<span class="currency-symbol">$</span>${
-      item.price * item.quantity
-    }`;
+    const spanTotalCurrencySymbol = createElementWithClass("span", "currency-symbol", "$");
+    paraItemTotalPrice.append(spanTotalCurrencySymbol, document.createTextNode(item.price * item.quantity));
 
-    modalUl.append(modalLi);
+    fragment.append(modalLi);
     modalLi.append(imgItem, paraItemName, spanQuantityPrice, paraItemTotalPrice);
     spanQuantityPrice.append(paraItemQuantity, paraItemPrice);
     paraItemQuantity.prepend(spanXSymbol)
   });
-
-  
+  modalUl.append(fragment);
 }
  
 
