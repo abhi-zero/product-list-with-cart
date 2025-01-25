@@ -1,4 +1,5 @@
-import { createElementWithClass, getData, showPlaceholder } from "./main.js";
+import { createElementWithClass, getData, showPlaceholder, resetQuantity } from "./main.js";
+import { generateItemForModal } from "./modal.js";
 
 export let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
 
@@ -132,20 +133,22 @@ function deleteItem(cartItemId) {
   cart = cart.filter((item) => {
     return item.cartItemId !== cartItemId;
   });
-  if(!cartItemId){
-    
-  }
   updateCartView();
+  resetQuantity();
+  return true;
 }
 
-function showTotalPrice(cart) {
+export function showTotalPrice(cart) {
   const totalPrice = calcTotalPrice(cart);
-  const totalPriceText = document.querySelector(".total-amount");
-  totalPriceText.textContent = `$${totalPrice.toFixed(2)}`;
+  const totalPriceText = document.querySelectorAll(".total-amount");
+  totalPriceText.forEach((text) => {
+    text.textContent = `$${totalPrice.toFixed(2)}`;
+  });
+
 }
-function calcTotalPrice(cart) {
+export function calcTotalPrice(cart) {
   const calcPrice = cart.reduce((total, item) => {
-    return (total += item.price * 100 * item.quantity);
+    return (total += (item.price * 100) * item.quantity);
   }, 0);
   return calcPrice / 100;
 }
@@ -156,4 +159,6 @@ export function updateCartView() {
   generateItemForCart();
   showTotalPrice(cart);
   showPlaceholder();
+  generateItemForModal()
 }
+console.log(cart);
