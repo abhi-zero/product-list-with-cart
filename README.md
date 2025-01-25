@@ -55,7 +55,7 @@ To run this project locally, follow these steps:
 ![Product List](./assets/screenshots/product-list.png)
 *Screenshot of the product list.*
 
-![Cart](assets/screenshorts/cart-list.png)
+![Cart](./assets/screenshots/cart-list.png)
 *Screenshot of the cart.*
 
 ## Contributing
