@@ -16,7 +16,7 @@ ctaConfirmOrder.addEventListener("click", () => {
 // Event listener to close the modal when clicking on the close modal button
 ctaCloseModal.addEventListener("click", () => {
   modal.close();
-  clearCart()
+  clearCart();
 });
 
 // This function fetches data from a JSON file and returns it as a Promise
@@ -36,7 +36,7 @@ export async function getData() {
 }
 
 // Helper function to create an HTML element with a class and optional text content
-export function createElementWithClass(tag, classname = null, textContent = "") {
+export function createElementWithClass(tag, classname, textContent = "") {
   const element = document.createElement(tag);
   element.className = classname;
   element.textContent = textContent;
@@ -50,6 +50,7 @@ const aside = document.querySelector("aside");
 // Function to create and return a section element for each item
 function createItemSection(item, index) {
   const section = createElementWithClass("section", "item");
+  section.setAttribute("data-ItemId", index);
 
   const divThumbnailCta = createElementWithClass("div", "thumbnail-cta");
 
@@ -67,16 +68,19 @@ function createItemSection(item, index) {
   const imgTag = document.createElement("img");
   imgTag.setAttribute("src", `${item.image.mobile}`);
   imgTag.setAttribute("alt", `Thumbnail of ${item.name}`);
+  imgTag.setAttribute("id", "item-img");
 
   // Create div for the call-to-action (CTA) buttons
   const divCta = createElementWithClass("div", "cta");
   divCta.setAttribute("data-ItemId", index);
   const divBtnAddToCart = createElementWithClass("div", "add-to-cart");
+  divBtnAddToCart.classList.add(".visibilty-block");
 
   // Add text to the "Add to Cart" button
   const paraAddToCart = createElementWithClass("p", "", "Add to Cart");
 
   const divBtnAddMore = createElementWithClass("div", "add-more");
+  divBtnAddMore.classList.add("hidden");
 
   const divItemDetails = createElementWithClass("div", "item-details");
 
@@ -98,7 +102,7 @@ function createItemSection(item, index) {
   divCta.append(divBtnAddToCart, divBtnAddMore);
   divBtnAddToCart.append(paraAddToCart);
   divBtnAddMore.innerHTML = `<button data-action="decrement"><p>-</p></button>
-                      <p class="item-quantity" data-itemid='${index}'>1</p>
+                      <p class="item-quantity" data-itemid='${index}'>0</p>
                       <button data-action="increment"><p>+</p></button>`;
   divItemDetails.append(paraCategory);
   divItemDetails.append(paraCategory, h3ItemTitle, paraItemPrice);
@@ -106,13 +110,11 @@ function createItemSection(item, index) {
 
   // Event listener to handle adding/removing items from the cart
   divCta.addEventListener("click", (event) => {
-
     addAndRemoveCart(divBtnAddMore, divBtnAddToCart, event, imgTag);
   });
 
   return section;
 }
-
 
 // Function to create the cart section of the page
 function createCartSection() {
@@ -144,7 +146,7 @@ function createCartSection() {
 
   let ulCartItems = document.createElement("ul");
   ulCartItems.setAttribute("id", "cart-items");
-  
+
   const spanTotalPrice = createElementWithClass("span", "total-price");
 
   const paraTitleText = createElementWithClass("p", "title-text", "Order");
@@ -196,55 +198,104 @@ init();
 
 // Function to handle adding and removing items from the cart
 function addAndRemoveCart(addSection, removeSection, event, item) {
-  addSection.style.display = "flex";
-  removeSection.style.display = "none";
-  item.classList.add('selected-item');
-  
+  addSection.classList.add("visibilty-flex");
+  addSection.classList.remove("hidden");
+  removeSection.classList.add("hidden");
+  removeSection.classList.remove("visibilty-block");
+  item.classList.add("selected-item");
+
   const cta = event.target.closest(".cta");
 
   const quantity = cta.querySelector(".item-quantity");
-
+  if (quantity.textContent == "0") {
+    quantity.textContent = parseInt(quantity.textContent) + 1;
+  }
   // Determine the action (increment or decrement) based on the button clicked
   const button = event.target.closest("button");
   const action = button?.dataset?.action;
 
   if (action === "increment") {
     quantity.textContent = parseInt(quantity.textContent) + 1;
-  }else if (action === "decrement") {
-    if(quantity.textContent == "0"){
+  } else if (action === "decrement") {
+    if (quantity.textContent == "0") {
       showPlaceholder();
-      return 
+      return;
     }
     quantity.textContent = Math.max(0, parseInt(quantity.textContent) - 1);
 
-    
     // Hide the add button if the quantity is zero, and show it after a delay
-    if (addSection.style.display == "flex" && quantity.textContent == "0") {
-        addSection.style.display = "none";
-        removeSection.style.display = "block";
-        item.classList.remove('selected-item')
+    if (quantity.textContent == "0") {
+      addSection.classList.remove("visibilty-flex");
+      addSection.classList.add("hidden");
+      removeSection.classList.remove("hidden");
+      removeSection.classList.add("visibilty-block");
+      item.classList.remove("selected-item");
     }
-  }
-  if(cart.length == "0" && quantity.textContent > "1"){
-    quantity.textContent = "0";
   }
   // Add the item to the cart
   addToCart(event, quantity);
 }
 
-function clearCart(){
+function clearCart() {
   cart.length = 0;
-  localStorage.removeItem('cartItems');
+  localStorage.removeItem("cartItems");
   updateCartView();
+  clearStyles();
 }
 
-const illustration = document.querySelector('.illustration');
-const cartItemSection = document.querySelector('.cart-item-section');
-export function showPlaceholder(){
-  if(cart.length == 0){
+function clearStyles() {
+  const itemImgs = document.querySelectorAll("#item-img");
+  for (let itemImg of itemImgs) {
+    itemImg.classList.remove("selected-item");
+  }
+  const allBtnAddToCarts = document.querySelectorAll(".add-to-cart");
+  for (let btnAddTocart of allBtnAddToCarts) {
+    btnAddTocart.classList.remove("hidden");
+    btnAddTocart.classList.add("visibilty-block");
+  }
+  const allBtnAddMore = document.querySelectorAll(".add-more");
+  for (let btnAddMore of allBtnAddMore) {
+    btnAddMore.classList.remove("visibilty-flex");
+    btnAddMore.classList.add("hidden");
+  }
+  const quantityValue = document.querySelectorAll(".item-quantity");
+  for (let quantity of quantityValue) {
+    quantity.textContent = "0";
+  }
+}
+
+export function resetQuantity() {
+  const allSections = document.querySelectorAll("section[data-itemid]");
+  
+  allSections.forEach((section) => {
+    const imgElement = section.querySelector("#item-img");
+    const quantityElement = section.querySelector(".item-quantity");
+    const btnAddToCart = section.querySelector(".add-to-cart");
+    const btnAddMore = section.querySelector(".add-more");
+    const itemId = section.dataset.itemId;
+    const cartItem = cart.find((item) => {
+      return item.cartItemId == itemId;
+    });
+   
+    if (!cartItem) {
+      quantityElement.textContent = "0";
+      imgElement.classList.remove('selected-item');
+      btnAddToCart.classList.remove("hidden");
+      btnAddToCart.classList.add("visibilty-block");
+      btnAddMore.classList.remove("visibilty-flex");
+      btnAddMore.classList.add("hidden");
+    }
+  });
+
+}
+
+const illustration = document.querySelector(".illustration");
+const cartItemSection = document.querySelector(".cart-item-section");
+export function showPlaceholder() {
+  if (cart.length == 0) {
     illustration.style.display = "block";
     cartItemSection.style.display = "none";
-  }else{
+  } else {
     illustration.style.display = "none";
     cartItemSection.style.display = "grid";
   }
