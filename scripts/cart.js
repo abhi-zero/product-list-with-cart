@@ -66,7 +66,7 @@ async function saveItemInToCart(productId, quantityValue) {
 
 function displayItemCount() {
   const totalCartedItem = document.querySelector(".carted-items");
-  totalCartedItem.textContent = cart.length;
+  totalCartedItem.textContent = cart.length || 0;
   return true;
 }
 
