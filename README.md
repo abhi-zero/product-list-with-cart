@@ -1,6 +1,6 @@
 # Product List with Cart
 
-This project is a frontend implementation of a product list with a cart functionality. It is built using HTML, CSS, and JavaScript.
+This project is a challenge from [Frontend Mentor](https://www.frontendmentor.io), a platform that provides real-world projects to help developers improve their coding skills. By working on this project, you can practice building a functional and responsive product list with cart functionality, enhancing your HTML, CSS, and JavaScript skills.
 
 ## Table of Contents
 
@@ -19,6 +19,8 @@ This project showcases a product list where users can add items to their cart. T
 ## Features
 
 - Display a list of products
+- Responsive design for mobile and desktop views
+- Persistent cart using local storage
 - Add products to the cart
 - View the cart with added products
 - Update product quantities in the cart
