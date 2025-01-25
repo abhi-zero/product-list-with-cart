@@ -18,7 +18,7 @@ ctaCloseModal.addEventListener("click", () => {
   modal.close();
   clearCart();
 });
-
+showPlaceholder();
 // This function fetches data from a JSON file and returns it as a Promise
 export async function getData() {
   
@@ -301,4 +301,4 @@ export function showPlaceholder() {
     cartItemSection.style.display = "grid";
   }
 }
-showPlaceholder();
+
