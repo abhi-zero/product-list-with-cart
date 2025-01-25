@@ -52,10 +52,10 @@ To run this project locally, follow these steps:
 
 ## Screenshots
 
-![Product List](./assets/screenshorts/product-list.png)
+![Product List](./assets/screenshots/product-list.png)
 *Screenshot of the product list.*
 
-![Cart](./assets/screenshorts/cart-list.png)
+![Cart](assets/screenshorts/cart-list.png)
 *Screenshot of the cart.*
 
 ## Contributing
